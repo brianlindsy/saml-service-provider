@@ -59,6 +59,7 @@ public class JWTController {
             String jwt = jwtAuthor.createJWT(user.getEmail(), jwtClaims);
             user.setJwt(jwt);
             LOG.info("Fake user: " + user.toString());
+            LOG.info("JWT: " + jwt);
         } else {
             user = (JWTAuthenticatedUser) principal;
             LOG.info("Retrieving token: " + user.getJwt());

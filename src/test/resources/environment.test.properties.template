@@ -1,6 +1,6 @@
 portalUrl=http://localhost:3000
 entityId=entity
-keyLocation=C:\\JSONPulseRsaJoseJWebKeyTest.txt
+keyLocation=C:\\Users\blindsey\dev\pulseJSONPulseRsaJoseJWebKeyTest.txt
 jwtAllowedClockSkew=30
 jwtIssuer=CALEMSA
 jwtAudience=CALEMSA

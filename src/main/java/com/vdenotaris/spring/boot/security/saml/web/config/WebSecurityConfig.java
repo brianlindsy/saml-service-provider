@@ -275,7 +275,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         idpDiscovery.setIdpSelectionPath("/saml/idpSelection");
         return idpDiscovery;
     }
-
+    
+    @Bean
+	@Qualifier("idp-fakeExternalHIE")
+	public ExtendedMetadataDelegate fakeExternalHIEExtendedMetadataProvider()
+        throws MetadataProviderException {
+		String fakeExternalHIEMetadataURL = "https://idp.ssocircle.com/idp-meta.xml";
+		Timer backgroundTaskTimer = new Timer(true);
+		HTTPMetadataProvider httpMetadataProvider = new HTTPMetadataProvider(backgroundTaskTimer, httpClient(), fakeExternalHIEMetadataURL);
+		httpMetadataProvider.setParserPool(parserPool());
+		ExtendedMetadataDelegate extendedMetadataDelegate =
+            new ExtendedMetadataDelegate(httpMetadataProvider, extendedMetadata());
+		extendedMetadataDelegate.setMetadataTrustCheck(true);
+		extendedMetadataDelegate.setMetadataRequireSignature(false);
+		return extendedMetadataDelegate;
+	}
+    
 	@Bean
 	@Qualifier("idp-ssocircle")
 	public ExtendedMetadataDelegate ssoCircleExtendedMetadataProvider()
@@ -290,6 +305,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		extendedMetadataDelegate.setMetadataRequireSignature(false);
 		return extendedMetadataDelegate;
 	}
+	
 
 	@Bean
 	@Qualifier("idp-testshib")
